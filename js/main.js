@@ -98,12 +98,14 @@ function cambioDeInfo(){
 		nuevoMensaje.appendChild(contenedorMensajes);
 
 		var nNombre= crear("h5",this.firstElementChild.children[1].innerHTML);
+		contenedorMensajes.classList.add("pink-1");
 		contenedorMensajes.appendChild(nNombre);
 
 		var nMensaje= crear("p",this.firstElementChild.children[2].innerHTML);
 		contenedorMensajes.appendChild(nMensaje);
 
 		var horanueva= crear("div",this.lastElementChild.innerHTML);
+		horanueva.classList.add("time");
 		contenedorMensajes.appendChild(horanueva);
 	}
 }
