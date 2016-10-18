@@ -5,6 +5,7 @@ var lista= document.querySelectorAll(".w-recent-chats li");
 var mensaje= document.getElementById("mensaje");
 var horaMensaje= document.getElementById("hora");
 var arr= [];
+var click= 1;
 
 function cargarPagina(){
 	input.addEventListener("keydown", enter);
@@ -21,23 +22,29 @@ function cargarPagina(){
 
 function enter(e){
 	if(e.keyCode== 13){
-		var newElement= crearClases("div", ["w-message", "w-message-out"]);
-		chat.appendChild(newElement);
+		if(mensajes.value.length != 0){
+			var newElement= crearClases("div", ["w-message", "w-message-out"]);
+			chat.appendChild(newElement);
 
-		var newChat= crearClases("div", ["w-message-text"]);
-		newElement.appendChild(newChat);
+			var newChat= crearClases("div", ["w-message-text"]);
+			newElement.appendChild(newChat);
 
-		var newText= crear("p", input.value);
-		newChat.appendChild(newText);
+			var newText= crear("p", input.value);
+			newChat.appendChild(newText);
 
-		var hora= crearClases("div", ["time"]);
-		horaActual(hora);
-		newChat.appendChild(hora);
+			var hora= crearClases("div", ["time"]);
+			horaActual(hora);
+			newChat.appendChild(hora);
 
-		mensaje.innerHTML= newText.innerHTML;
-		horaMensaje.innerHTML= hora.innerHTML;
+			mensaje.innerHTML= newText.innerHTML;
+			horaMensaje.innerHTML= hora.innerHTML;
 
-		input.value= "";
+			if(click== 1){
+				arr.push(newElement);
+			}
+
+			input.value= "";
+		}
 	}
 }
 
@@ -82,24 +89,21 @@ function cambioDeInfo(){
 	menChat.firstElementChild.firstElementChild.src= this.firstElementChild.firstElementChild.src;
 	menChat.firstElementChild.children[1].innerHTML= this.firstElementChild.children[1].innerHTML;
 
+	for (var j = 0; j <chat.children.length;) {
+		chat.children[j].remove();
+	}
+	
 	if(this == lista[0]){
 		for (var j = 0; j <arr.length; j++) {
 		chat.appendChild(arr[j]);
 		}
 	}else{
-		for (var j = 0; j <chat.children.length;) {
-			chat.children[j].remove();
-		}
 
 		var nuevoMensaje= crearClases("div", ["w-message", "w-message-in"]);
 		chat.appendChild(nuevoMensaje);
 
 		var contenedorMensajes= crearClases("div", ["w-message-text"]);
 		nuevoMensaje.appendChild(contenedorMensajes);
-
-		var nNombre= crear("h5",this.firstElementChild.children[1].innerHTML);
-		contenedorMensajes.classList.add("pink-1");
-		contenedorMensajes.appendChild(nNombre);
 
 		var nMensaje= crear("p",this.firstElementChild.children[2].innerHTML);
 		contenedorMensajes.appendChild(nMensaje);
@@ -108,4 +112,9 @@ function cambioDeInfo(){
 		horanueva.classList.add("time");
 		contenedorMensajes.appendChild(horanueva);
 	}
+
+	click ++;
+	if(this == lista[0])
+		click= 1;
+		
 }
